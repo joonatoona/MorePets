@@ -1,6 +1,9 @@
 package com.digitalfishfun.morepets;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -66,5 +69,15 @@ public class petTardis extends Item {
             }
         }
         return item;
+    }
+
+    @Override
+    public void onUpdate(ItemStack itemStack, World world,  Entity entity, int par4, boolean par5) {
+        EntityPlayer entityPlayer = (EntityPlayer)entity;
+        if (!world.isRemote) {
+            if (IPKeyHandler.nflag) {
+                entityPlayer.openGui(InventoryPets.instance, InventoryPets.petNameGUI_ID, entityPlayer.worldObj, (int) entityPlayer.posX, (int) entityPlayer.posY, (int) entityPlayer.posZ);
+            }
+        }
     }
 }
